@@ -7,6 +7,7 @@ let TOKEN          = localStorage.getItem('pz_token') || '';
 let USUARIO_LOGADO = JSON.parse(localStorage.getItem('pz_usuario') || 'null');
 let mesaEmFechamento = null;
 
+//esse inicio é sobre o login, já revirei ele inteiro e não acho o erro com relação ao Json
 async function fazerLogin() {
   const email = document.getElementById('l-email').value.trim();
   const senha = document.getElementById('l-senha').value;
