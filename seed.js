@@ -1,4 +1,6 @@
 require('dotenv').config();
+//carrega variáveis de ambiente definidas em um arquivo chamado .env para o objeto process.env da aplicação
+
 const { ready, run, query } = require('./src/database/sqlite');
 const bcrypt = require('bcryptjs');
 
