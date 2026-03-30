@@ -1,3 +1,4 @@
+<!-- Os comentários adicionados em todos os arquivos foram digitados na mão, sem o uso de inteligência artificial, pois a gente não é todo mundo 👍-->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -68,6 +69,7 @@
     </div>
 
     <nav class="sb-nav">
+
       <!-- Visualizar Dashboard -->
       <div class="sb-group">Geral</div>
       <button class="nav-btn ativo" onclick="ir('dashboard',this)">
@@ -111,14 +113,16 @@
       <span>v2.0</span>
       <button class="btn-logout" onclick="sair()">Sair</button>
     </div>
-  </aside>
+  </aside>~
+  
+  <!-- // ==================================  FIM TELA INICIAL ============================= // -->
 
 
 
 
   <!-- // ==================================  DASHBOARD ============================= // -->
 
-  <div id="conteudo">
+  <div id="conteudo"> <!--Mostrar o Geral das informações em uma única página-->
     <section id="pg-dashboard" class="secao ativa">
 
       <div class="pg-header">
@@ -133,13 +137,16 @@
 
         <div class="stats-grid">
 
+          <!-- Área de visualização dos Pedidos -->
           <div class="stat cr">
             <span class="ico">📋</span>
             <div class="lbl">Pedidos</div>
             <div class="val" id="s-ped">—</div>
-            <div class="sub" id="s-ped-sub">carregando</div>
+            <div class="sub" id="s-ped-sub">carregando</div> <!--  Carregando a visualização dos Pedidos -->
+
           </div>
 
+          <!-- Área de visualização do Faturamento -->
           <div class="stat co" id="stat-fat">
             <span class="ico">💰</span>
             <div class="lbl">Faturamento</div>
@@ -147,6 +154,7 @@
             <div class="sub">total geral</div>
           </div>
 
+          <!-- Área de visualização dos Pedidos -->
           <div class="stat cg" id="stat-cli">
             <span class="ico">👥</span>
             <div class="lbl">Clientes</div>
@@ -154,6 +162,7 @@
             <div class="sub">cadastrados</div>
           </div>
 
+           <!-- Área de visualização das Pizzas no Cardápio -->
           <div class="stat cb">
             <span class="ico">🍕</span>
             <div class="lbl">Pizzas</div>
@@ -161,6 +170,7 @@
             <div class="sub">no cardápio</div>
           </div>
 
+          <!-- Área de visualização das Entregas -->
           <div class="stat cp">
             <span class="ico">🛵</span>
             <div class="lbl">Em entrega</div>
@@ -174,6 +184,7 @@
 
           <div class="card">
 
+          <!-- Verificar pedidos usando botão -->
             <div class="card-head">
               <h3>Pedidos Recentes</h3>
               <button class="btn btn-red btn-sm"
@@ -183,7 +194,7 @@
             </div>
 
             <div class="card-body" id="dash-pedidos">
-              <div class="spin-wrap"><div class="spin"></div> Carregando...</div>
+              <div class="spin-wrap"><div class="spin"></div> Carregando...</div> <!--  Carregando a visualização dos Pedidos -->
             </div>
 
           </div>
@@ -209,8 +220,9 @@
 
     <section id="pg-pedidos" class="secao">
 
-      <div class="pg-header">
-        <div><h2>Pedidos</h2><p>Acompanhe e gerencie os pedidos</p></div>
+    <!--  Verificar pedidos -->
+      <div class="pg-header">  
+        <div><h2>Pedidos</h2><p>Acompanhe e gerencie os pedidos</p></div> 
         <button class="btn btn-red" onclick="abrirPedido()">+ Novo Pedido</button>
       </div>
 
@@ -218,7 +230,7 @@
 
         <div class="card">
 
-          <div class="card-body tbl-wrap" id="tbl-pedidos">
+          <div class="card-body tbl-wrap" id="tbl-pedidos"> <!--  Carregando a visualização dos Pedidos -->
             <div class="spin-wrap"><div class="spin"></div> Carregando...</div>
           </div>
 
@@ -227,16 +239,21 @@
 
     </section>
 
+  <!-- // ==================================  FIM PEDIDOS ============================= // -->
+
+
+  <!-- // ==================================   SEÇÃO PIZZA  ============================= // -->
+
     <section id="pg-pizzas" class="secao">
 
       <div class="pg-header">
 
         <div>
-          <h2 id="pg-pizzas-titulo">Pizzas</h2>
+          <h2 id="pg-pizzas-titulo">Pizzas</h2>  
           <p id="pg-pizzas-sub">Gerencie o cardápio</p>
         </div>
     
-        <button class="btn btn-red" id="btn-nova-pizza" onclick="abrirPizza()">+ Nova Pizza</button>
+        <button class="btn btn-red" id="btn-nova-pizza" onclick="abrirPizza()">+ Nova Pizza</button>  <!-- Botão para  adicionar mais pizza -->
       </div>
 
 
@@ -245,13 +262,13 @@
         <div class="card">
 
           <div class="card-body tbl-wrap" id="tbl-pizzas">
-            <div class="spin-wrap"><div class="spin"></div> Carregando...</div>
+            <div class="spin-wrap"><div class="spin"></div> Carregando...</div> <!--  Carregando a visualização das Pizzas -->
           </div>
 
         </div>
       </div>
     </section>
-  <!-- // ==================================  FIM PEDIDOS ============================= // -->
+  <!-- // ==================================  FIM SEÇÃO PIZZA ============================= // -->
 
 
   <!-- // ==================================  CLIENTES ============================= // -->
@@ -259,15 +276,15 @@
 
       <div class="pg-header">
 
-        <div><h2>Clientes</h2><p>Cadastre e busque clientes</p></div>
-        <button class="btn btn-red" onclick="abrirCliente()">+ Novo Cliente</button>
+        <div><h2>Clientes</h2><p>Cadastre e busque clientes</p></div> 
+        <button class="btn btn-red" onclick="abrirCliente()">+ Novo Cliente</button>   <!-- Botão para  adicionar mais  clientes -->
       </div>
 
       <div class="pg-body">
 
         <div style="margin-bottom:12px">
           <input id="busca-cli" placeholder="🔍  Buscar por nome..."
-            style="max-width:270px" oninput="buscarCli(this.value)">
+            style="max-width:270px" oninput="buscarCli(this.value)"> <!-- Caixa de entrada para buscar o nome dos clientes -->
         </div>
 
         <div class="card">
@@ -284,6 +301,8 @@
     </section>
   <!-- // ==================================  FIM CLIENTES ============================= // -->
 
+
+
   <!-- // ==================================  USUÁRIOS ============================= // -->
 
     <section id="pg-usuarios" class="secao">
@@ -291,7 +310,7 @@
       <div class="pg-header">
 
         <div><h2>Usuários</h2><p>Atendentes e administradores</p></div>
-        <button class="btn btn-ghost" onclick="abrirUsuario()">+ Novo Usuário</button>
+        <button class="btn btn-ghost" onclick="abrirUsuario()">+ Novo Usuário</button> <!-- Botão para adicionar mais usuários-->
       </div>
 
       <div class="pg-body">
@@ -299,8 +318,8 @@
         <div class="card">
 
           <div class="card-body tbl-wrap" id="tbl-usuarios">
-            <div class="spin-wrap"><div class="spin"></div> Carregando...</div>
-          </div>
+            <div class="spin-wrap"><div class="spin"></div> Carregando...</div>   <!--  Carregando a adição de novos usuários -->
+          </div> 
 
         </div>
 
@@ -321,13 +340,14 @@
           <p id="mesas-sub">Seus pedidos ativos</p>
         </div>
 
-        <button class="btn btn-red" onclick="abrirPedidoMesa()">+ Novo Pedido</button>
+        <button class="btn btn-red" onclick="abrirPedidoMesa()">+ Novo Pedido</button> <!--Botão para fazer um novo pedido-->
       </div>
 
       <div class="pg-body">
 
         <div class="stats-grid" style="margin-bottom:18px">
 
+          <!-- Área de visualizar os meus pedidos-->
           <div class="stat cr">
             <span class="ico">📋</span>
             <div class="lbl">Meus Pedidos</div>
@@ -335,6 +355,7 @@
             <div class="sub" id="g-ped-sub">hoje</div>
           </div>
           
+          <!-- Área de visualizar as mesas ativas-->
           <div class="stat cg">
             <span class="ico">🪑</span>
             <div class="lbl">Mesas Ativas</div>
@@ -342,6 +363,7 @@
             <div class="sub">com pedido aberto</div>
           </div>
 
+          <!-- Área de visualizar a pizza sendo preparada-->
           <div class="stat cb">
             <span class="ico">👨‍🍳</span>
             <div class="lbl">Em Preparo</div>
@@ -349,6 +371,8 @@
             <div class="sub">sendo preparados</div>
           </div>
 
+
+          <!-- Área de visualizar o pedido pronto-->
           <div class="stat cp">
             <span class="ico">🛵</span>
             <div class="lbl">Prontos</div>
@@ -361,11 +385,11 @@
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap">
           <span style="font-size:.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px">Mesa:</span>
           <div style="display:flex;gap:5px;flex-wrap:wrap" id="mesa-botoes"></div>
-          <button class="btn btn-ghost btn-sm" onclick="carregarMesas(null)">Todas</button>
+          <button class="btn btn-ghost btn-sm" onclick="carregarMesas(null)">Todas</button> <!--Botão para carregar todas as mesas-->
         </div>
 
         <div id="grid-mesas" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;">
-          <div class="spin-wrap"><div class="spin"></div> Carregando...</div>
+          <div class="spin-wrap"><div class="spin"></div> Carregando...</div> <!--Carregando as mesas-->
         </div>
 
       </div>
@@ -387,11 +411,11 @@
     <input type="hidden" id="p-id">
 
     <div class="fr2">
-      <div class="fg"><label>Nome *</label><input id="p-nome" placeholder="Ex: Calabresa"></div>
+      <div class="fg"><label>Nome *</label><input id="p-nome" placeholder="Ex: Calabresa"></div>  <!--Caixa de entrada para inserir no nome da pizza-->
 
       <div class="fg"><label>Categoria</label>
 
-        <select id="p-cat">
+        <select id="p-cat"> <!--Caixa de selecionar a categoria da pizza-->
           <option value="tradicional">Tradicional</option>
           <option value="especial">Especial</option>
           <option value="premium">Premium</option>
@@ -402,16 +426,16 @@
 
     </div>
 
-    <div class="fg"><label>Ingredientes *</label><input id="p-ing" placeholder="Calabresa, cebola, mussarela..."></div>
-    <div class="fg"><label>Descrição</label><input id="p-desc" placeholder="Breve descrição..."></div>
+    <div class="fg"><label>Ingredientes *</label><input id="p-ing" placeholder="Calabresa, cebola, mussarela..."></div> <!--Mostrar os ingredientes presente na pizza-->
+    <div class="fg"><label>Descrição</label><input id="p-desc" placeholder="Breve descrição..."></div> <!--Mostrar uma breve descrição pizza-->
 
-    <div class="fr3">
+    <div class="fr3"><!--Mostrar os tipos de preço da pizza-->
       <div class="fg"><label>Preço P (R$)</label><input id="p-pp" type="number" step="0.01" min="0" placeholder="35,00"></div>
       <div class="fg"><label>Preço M (R$)</label><input id="p-pm" type="number" step="0.01" min="0" placeholder="45,00"></div>
       <div class="fg"><label>Preço G (R$)</label><input id="p-pg" type="number" step="0.01" min="0" placeholder="55,00"></div>
     </div>
 
-    <div class="fg"><label>Disponível</label>
+    <div class="fg"><label>Disponível</label> <!--Verificar se a Pizza está disponível-->
       <select id="p-disp">
         <option value="true">✅ Sim</option>
         <option value="false">❌ Não</option>
@@ -419,8 +443,8 @@
     </div>
 
     <div class="modal-foot">
-      <button class="btn btn-ghost" onclick="fechar('m-pizza')">Cancelar</button>
-      <button class="btn btn-red"   onclick="salvarPizza()">Salvar</button>
+      <button class="btn btn-ghost" onclick="fechar('m-pizza')">Cancelar</button> <!--Botão para cancelar a pizza-->
+      <button class="btn btn-red"   onclick="salvarPizza()">Salvar</button>       <!--Botão para salvar a pizza-->
     </div>
 
   </div>
@@ -432,33 +456,33 @@
 
 <div id="m-cliente" class="modal-bg">
 
-  <div class="modal">
+  <div class="modal"> <!--Adicionar novos clientes-->
 
     <h3 id="m-cli-t">Novo Cliente</h3>
     <input type="hidden" id="c-id">
 
     <div class="fr2">
-      <div class="fg"><label>Nome *</label><input id="c-nome" placeholder="João da Silva"></div>
-      <div class="fg"><label>Telefone *</label><input id="c-tel" placeholder="(11) 99999-9999"></div>
+      <div class="fg"><label>Nome *</label><input id="c-nome" placeholder="João da Silva"></div>  <!--Caixa de entrada para inserir no nome do cliente-->
+      <div class="fg"><label>Telefone *</label><input id="c-tel" placeholder="(11) 99999-9999"></div> <!--Caixa de entrada para inserir o telefone do cliente-->
     </div>
 
-    <div class="fr2">
-      <div class="fg"><label>Rua</label><input id="c-rua" placeholder="Rua das Flores"></div>
-      <div class="fg"><label>Número</label><input id="c-num" placeholder="123"></div>
+    <div class="fr2"> 
+      <div class="fg"><label>Rua</label><input id="c-rua" placeholder="Rua das Flores"></div>  <!--Caixa de entrada para inserir o endereço do cliente-->
+      <div class="fg"><label>Número</label><input id="c-num" placeholder="123"></div>  <!--Caixa de entrada para inserir o número do endereço do cliente-->
     </div>
 
     <div class="fr3">
-      <div class="fg"><label>Bairro</label><input id="c-bairro" placeholder="Centro"></div>
-      <div class="fg"><label>Cidade</label><input id="c-cidade" placeholder="São Paulo"></div>
-      <div class="fg"><label>CEP</label><input id="c-cep" placeholder="00000-000"></div>
+      <div class="fg"><label>Bairro</label><input id="c-bairro" placeholder="Centro"></div>  <!--Caixa de entrada para inserir o bairro do cliente-->
+      <div class="fg"><label>Cidade</label><input id="c-cidade" placeholder="São Paulo"></div> <!--Caixa de entrada para inserir a cidade do cliente-->
+      <div class="fg"><label>CEP</label><input id="c-cep" placeholder="00000-000"></div> <!--Caixa de entrada para inserir o CEP do cliente-->
     </div>
 
-    <div class="fg"><label>Complemento</label><input id="c-comp" placeholder="Apto 12, Bloco B"></div>
-    <div class="fg"><label>Observações</label><input id="c-obs" placeholder="Alergia, preferências..."></div>
+    <div class="fg"><label>Complemento</label><input id="c-comp" placeholder="Apto 12, Bloco B"></div> <!--Caixa de entrada para inserir o Complemento do cliente-->
+    <div class="fg"><label>Observações</label><input id="c-obs" placeholder="Alergia, preferências..."></div> <!--Caixa de entrada para inserir a observação do cliente-->
 
     <div class="modal-foot">
-      <button class="btn btn-ghost" onclick="fechar('m-cliente')">Cancelar</button>
-      <button class="btn btn-red"   onclick="salvarCliente()">Salvar</button>
+      <button class="btn btn-ghost" onclick="fechar('m-cliente')">Cancelar</button> <!-- Botão para cancelar o cadastro do novo cliente -->
+      <button class="btn btn-red"   onclick="salvarCliente()">Salvar</button>  <!-- Botão para salvar o cadastro do novo cliente -->
     </div>
 
   </div>
@@ -467,6 +491,7 @@
 
 <!-- // ==================================  FIM NOVO CLIENTE ============================= // -->
 
+
   <!-- // ==================================  NOVO PEDIDO ============================= // -->
 <div id="m-pedido" class="modal-bg">
 
@@ -474,36 +499,37 @@
 
     <h3>Novo Pedido</h3>
 
-    <div class="fg"><label>Cliente *</label><select id="ped-cli"></select></div>
+    <div class="fg"><label>Cliente *</label><select id="ped-cli"></select></div> <!--Caixa de entrada para inserir o pedido desejado -->
     <div class="div"></div>
 
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
-      <label style="margin-bottom:0;font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.3px">Itens do Pedido</label>
-      <button class="btn btn-ghost btn-sm" onclick="addItem()">+ Pizza</button>
+      <label style="margin-bottom:0;font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.3px">Itens do Pedido</label> <!--Caixa de entrada para inserir os itens do pedido desejado -->
+      <button class="btn btn-ghost btn-sm" onclick="addItem()">+ Pizza</button> <!-- Botão para adicionar pizza -->
     </div>
 
     <div style="display:grid;grid-template-columns:1fr 68px 58px 68px 30px;gap:6px;font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;padding:0 1px">
-      <span>Pizza</span><span>Tam.</span><span>Qtd</span><span>Subtotal</span><span></span>
+      <span>Pizza</span><span>Tam.</span><span>Qtd</span><span>Subtotal</span><span></span> <!--Caixa de entrada para inserir os itens do pedido desejado -->
+      <button class="btn btn-ghost btn-sm" onclick="addItem()">+ Pizza</button> <!-- Botão para adicionar pizza -->
     </div>
 
     <div id="itens-lista"></div>
 
-    <div class="total-box">
+    <div class="total-box"> <!--Mostrar os valores do pedido -->
       <div class="row"><span>Subtotal</span><span id="ped-sub">R$ 0,00</span></div>
       <div class="row"><span>Taxa de Entrega (R$)</span><input id="ped-taxa" type="number" min="0" step="0.5" value="0" style="width:72px;text-align:right;padding:3px 6px" oninput="recalc()"></div>
       <div class="row tot"><span>TOTAL</span><span id="ped-tot">R$ 0,00</span></div>
     </div>
 
-    <div class="fr2">
+    <div class="fr2"> <!--Selecionar a forma de pagamento -->
       <div class="fg"><label>Forma de Pagamento *</label><select id="ped-pag" onchange="toggleTroco()"><option value="pix">PIX</option><option value="cartao_credito">Cartão de Crédito</option><option value="cartao_debito">Cartão de Débito</option><option value="dinheiro">Dinheiro</option></select></div>
-      <div class="fg" id="wrap-troco" style="display:none"><label>Troco para (R$)</label><input id="ped-troco" type="number" min="0" step="1" placeholder="Ex: 100"></div>
+      <div class="fg" id="wrap-troco" style="display:none"><label>Troco para (R$)</label><input id="ped-troco" type="number" min="0" step="1" placeholder="Ex: 100"></div> <!--Caixa de entrada para selecionar o troco-->
     </div>
 
-    <div class="fg"><label>Observações</label><textarea id="ped-obs" rows="2" placeholder="Sem cebola, massa fina..."></textarea></div>
+    <div class="fg"><label>Observações</label><textarea id="ped-obs" rows="2" placeholder="Sem cebola, massa fina..."></textarea></div> <!--Caixa de entrada para adicionar as obeservações do pedidos -->
 
     <div class="modal-foot">
-      <button class="btn btn-ghost" onclick="fechar('m-pedido')">Cancelar</button>
-      <button class="btn btn-red"   onclick="salvarPedido()">Confirmar Pedido</button>
+      <button class="btn btn-ghost" onclick="fechar('m-pedido')">Cancelar</button> <!-- Botão para cancelar o pedido-->
+      <button class="btn btn-red"   onclick="salvarPedido()">Confirmar Pedido</button> <!-- Botão para Confirmar o pedido->
     </div>
 
   </div>
@@ -519,11 +545,11 @@
   <div class="modal" style="max-width:330px">
 
     <h3>Atualizar Status</h3>
-    <input type="hidden" id="st-id">
+    <input type="hidden" id="st-id">  <!--Caixa de entrada para atualizar status-->
 
     <div class="fg"><label>Novo Status</label>
 
-      <select id="st-val">
+      <select id="st-val"> <!--Caixa selecionavél para adicionar a situação sobre o pedido -->
 
         <option value="recebido">📥 Recebido</option>
         <option value="em_preparo">👨‍🍳 Em Preparo</option>
@@ -535,8 +561,8 @@
     </div>
 
     <div class="modal-foot">
-      <button class="btn btn-ghost" onclick="fechar('m-status')">Cancelar</button>
-      <button class="btn btn-blue"  onclick="salvarStatus()">Atualizar</button>
+      <button class="btn btn-ghost" onclick="fechar('m-status')">Cancelar</button> <!--Botão para cancelar os status-->
+      <button class="btn btn-blue"  onclick="salvarStatus()">Atualizar</button> <!--Botão para atualizar os status-->
     </div>
 
   </div>
@@ -549,17 +575,19 @@
   <div class="modal">
     <h3>Novo Usuário</h3>
 
-    <div class="fr2">
-      <div class="fg"><label>Nome *</label><input id="u-nome" placeholder="Nome completo"></div>
+    <div class="fr2"> <!-- Adicionar um novo usuário -->
+      <div class="fg"><label>Nome *</label><input id="u-nome" placeholder="Nome completo"></div> <!--Caixa de entrada para inserir o nome completo -->
+
+      <!--Caixa de entrada para inserir o perfil do novo usuário -->
       <div class="fg"><label>Perfil</label><select id="u-perfil"><option value="Atendente">Atendente</option><option value="Garcom">Garçom</option><option value="Administrador">Administrador</option></select></div>
     </div>
 
-    <div class="fg"><label>E-mail *</label><input id="u-email" type="email" placeholder="usuario@pizzaria.com"></div>
-    <div class="fg"><label>Senha *</label><input id="u-senha" type="password" placeholder="Mínimo 6 caracteres"></div>
+    <div class="fg"><label>E-mail *</label><input id="u-email" type="email" placeholder="usuario@pizzaria.com"></div> <!--Caixa de entrada para inserir o email -->
+    <div class="fg"><label>Senha *</label><input id="u-senha" type="password" placeholder="Mínimo 6 caracteres"></div> <!--Caixa de entrada para inserir a senha -->
 
     <div class="modal-foot">
-      <button class="btn btn-ghost" onclick="fechar('m-usuario')">Cancelar</button>
-      <button class="btn btn-ghost" onclick="salvarUsuario()">Criar</button>
+      <button class="btn btn-ghost" onclick="fechar('m-usuario')">Cancelar</button> <!--Botão para cancelar o cadastro-->
+      <button class="btn btn-ghost" onclick="salvarUsuario()">Criar</button> <!--Botão para criar o cadastro-->
     </div>
 
   </div>
@@ -574,34 +602,38 @@
 
     <h3>Pedido de Mesa</h3>
 
-    <div class="fr2">
+    <div class="fr2"><!--Selecionar a mesa-->
+
+      <!--Caixa de entrada para inserir qual mesa deseja -->
       <div class="fg"><label>Mesa *</label><select id="pm-mesa"><option value="">— Selecione a mesa —</option><option value="1">Mesa 1</option><option value="2">Mesa 2</option><option value="3">Mesa 3</option><option value="4">Mesa 4</option><option value="5">Mesa 5</option><option value="6">Mesa 6</option><option value="7">Mesa 7</option><option value="8">Mesa 8</option><option value="9">Mesa 9</option><option value="10">Mesa 10</option></select></div>
-      <div class="fg"><label>Cliente (opcional)</label><select id="pm-cli"><option value="">— Sem cadastro —</option></select></div>
+      <div class="fg"><label>Cliente (opcional)</label><select id="pm-cli"><option value="">— Sem cadastro —</option></select></div> <!--Caixa de entrada para inserir o cliente que vai ocupar a mesa -->
     </div>
 
     <div class="div"></div>
-
+    
+   
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
-      <label style="margin-bottom:0;font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.3px">Itens do Pedido</label>
-      <button class="btn btn-ghost btn-sm" onclick="addItemMesa()">+ Pizza</button>
+      <label style="margin-bottom:0;font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.3px">Itens do Pedido</label>  
+      <button class="btn btn-ghost btn-sm" onclick="addItemMesa()">+ Pizza</button>  <!--Botão para adiconar os itens selecionados-->
     </div>
 
+
     <div style="display:grid;grid-template-columns:1fr 68px 58px 68px 30px;gap:6px;font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;padding:0 1px">
-      <span>Pizza</span><span>Tam.</span><span>Qtd</span><span>Subtotal</span><span></span>
+      <span>Pizza</span><span>Tam.</span><span>Qtd</span><span>Subtotal</span><span></span> 
     </div>
 
     <div id="itens-mesa-lista"></div>
 
-    <div class="total-box">
+    <div class="total-box"> <!-- Valores do pedido -->
       <div class="row"><span>Subtotal</span><span id="pm-sub">R$ 0,00</span></div>
-      <div class="row tot"><span>TOTAL DA MESA</span><span id="pm-tot">R$ 0,00</span></div>
+      <div class="row tot"><span>TOTAL DA MESA</span><span id="pm-tot">R$ 0,00</span></div>  
     </div>
 
-    <div class="fg"><label>Observações</label><textarea id="pm-obs" rows="2" placeholder="Sem cebola, bem passado..."></textarea></div>
+    <div class="fg"><label>Observações</label><textarea id="pm-obs" rows="2" placeholder="Sem cebola, bem passado..."></textarea></div> <!-- Caixa de texto para inserir as observações do pedido -->
 
     <div class="modal-foot">
-      <button class="btn btn-ghost" onclick="fechar('m-pedido-mesa')">Cancelar</button>
-      <button class="btn btn-red"   onclick="salvarPedidoMesa()">Confirmar Pedido</button>
+      <button class="btn btn-ghost" onclick="fechar('m-pedido-mesa')">Cancelar</button> <!--Botão para cancelar o pedido-->
+      <button class="btn btn-red"   onclick="salvarPedidoMesa()">Confirmar Pedido</button> <!--Botão para confirmar o pedido-->
     </div>
 
   </div>
@@ -619,13 +651,14 @@
     <h3 id="fm-titulo">Fechar Mesa</h3>
     <div id="fm-resumo" style="margin-bottom:12px"></div>
 
-    <div class="total-box"><div class="row"><span>Total consumido</span><span id="fm-total">R$ 0,00</span></div></div>
+    <div class="total-box"><div class="row"><span>Total consumido</span><span id="fm-total">R$ 0,00</span></div></div> <!--Mostrar o total -->
 
+    <!--Mostrar as formas de pagamento -->
     <div class="fg"><label>Forma de Pagamento</label><select id="fm-pag"><option value="pix">PIX</option><option value="cartao_credito">Cartão de Crédito</option><option value="cartao_debito">Cartão de Débito</option><option value="dinheiro">Dinheiro</option></select></div>
 
     <div class="modal-foot">
-      <button class="btn btn-ghost" onclick="fechar('m-fechar-mesa')">Cancelar</button>
-      <button class="btn btn-green" onclick="confirmarFechamento()">✅ Fechar Mesa</button>
+      <button class="btn btn-ghost" onclick="fechar('m-fechar-mesa')">Cancelar</button> <!-- Botão para cancelar a mesa-->
+      <button class="btn btn-green" onclick="confirmarFechamento()">✅ Fechar Mesa</button>  <!-- Botão para confirmar a mesa-->
     </div>
 
   </div>
