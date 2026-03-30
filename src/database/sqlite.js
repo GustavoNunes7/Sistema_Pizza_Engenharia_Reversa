@@ -1,3 +1,9 @@
+// ============================================================
+// sqlite.js — Conexão com SQLite usando sql.js
+// sql.js é SQLite compilado para WebAssembly (puro JS),
+// não precisa de Visual Studio nem de compilação nativa.
+// ============================================================
+
 const initSqlJs = require('sql.js');
 const fs        = require('fs');
 const path      = require('path');
@@ -5,11 +11,16 @@ const path      = require('path');
 const DB_PATH = process.env.DB_PATH
   || path.join(__dirname, '..', '..', 'pizzaria.db');
 
+// Módulo singleton — exporta { db, ready }
+// "ready" é uma Promise que resolve quando o banco estiver pronto.
+// Todos os models devem aguardar essa Promise antes de usar o db.
+
 const state = { db: null };
 
 const ready = (async () => {
   const SQL = await initSqlJs();
 
+  // Se o arquivo já existe, carrega do disco
   if (fs.existsSync(DB_PATH)) {
     const fileBuffer = fs.readFileSync(DB_PATH);
     state.db = new SQL.Database(fileBuffer);
@@ -19,9 +30,11 @@ const ready = (async () => {
 
   const db = state.db;
 
+  // Ativa chaves estrangeiras
   db.run('PRAGMA foreign_keys = ON');
 
-  db.run(\`
+  // ── Criação das tabelas ────────────────────────────────
+  db.run(`
     CREATE TABLE IF NOT EXISTS usuarios (
       id          INTEGER PRIMARY KEY AUTOINCREMENT,
       nome        TEXT    NOT NULL,
@@ -32,9 +45,9 @@ const ready = (async () => {
       created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
       updated_at  TEXT    NOT NULL DEFAULT (datetime('now'))
     )
-  \`);
+  `);
 
-  db.run(\`
+  db.run(`
     CREATE TABLE IF NOT EXISTS clientes (
       id          INTEGER PRIMARY KEY AUTOINCREMENT,
       nome        TEXT    NOT NULL,
@@ -45,9 +58,9 @@ const ready = (async () => {
       created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
       updated_at  TEXT    NOT NULL DEFAULT (datetime('now'))
     )
-  \`);
+  `);
 
-  db.run(\`
+  db.run(`
     CREATE TABLE IF NOT EXISTS pizzas (
       id           INTEGER PRIMARY KEY AUTOINCREMENT,
       nome         TEXT    NOT NULL,
@@ -59,9 +72,9 @@ const ready = (async () => {
       created_at   TEXT    NOT NULL DEFAULT (datetime('now')),
       updated_at   TEXT    NOT NULL DEFAULT (datetime('now'))
     )
-  \`);
+  `);
 
-  db.run(\`
+  db.run(`
     CREATE TABLE IF NOT EXISTS pedidos (
       id              INTEGER PRIMARY KEY AUTOINCREMENT,
       numero_pedido   INTEGER,
@@ -79,9 +92,9 @@ const ready = (async () => {
       created_at      TEXT    NOT NULL DEFAULT (datetime('now')),
       updated_at      TEXT    NOT NULL DEFAULT (datetime('now'))
     )
-  \`);
+  `);
 
-  db.run(\`
+  db.run(`
     CREATE TABLE IF NOT EXISTS itens_pedido (
       id             INTEGER PRIMARY KEY AUTOINCREMENT,
       pedido_id      INTEGER NOT NULL REFERENCES pedidos(id),
@@ -92,20 +105,25 @@ const ready = (async () => {
       preco_unitario REAL    NOT NULL DEFAULT 0,
       subtotal       REAL    NOT NULL DEFAULT 0
     )
-  \`);
+  `);
 
+  // Salva no disco após criar as tabelas
   salvar();
 
   console.log('SQLite (sql.js) conectado:', DB_PATH);
   return db;
 })();
 
+// ── Helpers ────────────────────────────────────────────────
+
+// Salva o banco em disco (sql.js é em memória, precisa salvar manualmente)
 function salvar() {
   if (!state.db) return;
   const data = state.db.export();
   fs.writeFileSync(DB_PATH, Buffer.from(data));
 }
 
+// Executa um SELECT e retorna array de objetos
 function query(sql, params = []) {
   const stmt    = state.db.prepare(sql);
   const results = [];
@@ -117,6 +135,7 @@ function query(sql, params = []) {
   return results;
 }
 
+// Executa INSERT/UPDATE/DELETE e retorna { lastInsertRowid, changes }
 function run(sql, params = []) {
   state.db.run(sql, params);
   const meta = query('SELECT last_insert_rowid() as id, changes() as changes');
@@ -127,6 +146,7 @@ function run(sql, params = []) {
   };
 }
 
+// Retorna a primeira linha de um SELECT
 function get(sql, params = []) {
   const rows = query(sql, params);
   return rows[0] || null;

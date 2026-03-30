@@ -1,4 +1,8 @@
-const { ready, query, run, get } = require('../backend/database/sqlite');
+// ============================================================
+// Usuario.js — Model de Usuário (sql.js)
+// ============================================================
+
+const { ready, query, run, get } = require('../database/sqlite');
 const bcrypt = require('bcryptjs');
 
 function formatarUsuario(row) {
@@ -19,10 +23,10 @@ const Usuario = {
 
   async findAll() {
     await ready;
-    const rows = query(\`
+    const rows = query(`
       SELECT id, nome, email, perfil, ativo, created_at, updated_at
       FROM usuarios ORDER BY created_at DESC
-    \`);
+    `);
     return rows.map(formatarUsuario);
   },
 
@@ -33,10 +37,10 @@ const Usuario = {
 
   async findById(id) {
     await ready;
-    const row = get(\`
+    const row = get(`
       SELECT id, nome, email, perfil, ativo, created_at, updated_at
       FROM usuarios WHERE id = ?
-    \`, [id]);
+    `, [id]);
     return formatarUsuario(row);
   },
 
@@ -58,7 +62,7 @@ const Usuario = {
     let senhaFinal = atual.senha;
     if (senha) senhaFinal = await bcrypt.hash(senha, 10);
 
-    run(\`
+    run(`
       UPDATE usuarios SET
         nome       = ?,
         email      = ?,
@@ -67,7 +71,7 @@ const Usuario = {
         ativo      = ?,
         updated_at = datetime('now')
       WHERE id = ?
-    \`, [
+    `, [
       nome   ?? atual.nome,
       email  ?? atual.email,
       senhaFinal,
