@@ -7,13 +7,14 @@ let TOKEN          = localStorage.getItem('pz_token') || '';
 let USUARIO_LOGADO = JSON.parse(localStorage.getItem('pz_usuario') || 'null');
 let mesaEmFechamento = null;
 
-//esse inicio é sobre o login, já revirei ele inteiro e não acho o erro com relação ao Json
+//esse inicio é sobre o login
 async function fazerLogin() {
   const email = document.getElementById('l-email').value.trim();
   const senha = document.getElementById('l-senha').value;
   const btn   = document.getElementById('btn-login');
   const erro  = document.getElementById('login-erro');
 
+  //valida senha
   if (!email || !senha) {
     erro.style.display = 'block';
     erro.textContent   = 'Preencha e-mail e senha.';
@@ -23,6 +24,7 @@ async function fazerLogin() {
   btn.disabled    = true;
   btn.textContent = 'Entrando...';
   erro.style.display = 'none';
+
 
   try {
     const res  = await fetch(API + '/auth/login', {
@@ -83,6 +85,7 @@ function R$(v) {
   return 'R$ ' + Number(v || 0).toFixed(2).replace('.', ',');
 }
 
+//atualiza o status do pedido, dizendo se ja tão fazendo, entregando, etc
 function badge(s) {
   const r = {
     recebido:     '📥 Recebido',
@@ -353,6 +356,7 @@ async function salvarPedidoMesa() {
     } catch (e) { toast('Erro ao registrar mesa', 'err'); return; }
   }
 
+  //fala essa parte sobre o cliente fazer o pedido e seu status
   try {
     await api('POST', '/pedidos', {
       cliente:        clienteId,
@@ -385,12 +389,12 @@ async function confirmarFechamento() {
   if (!mesaEmFechamento) return;
 
   try {
-    await Promise.all(
+    await Promise.all( 
       mesaEmFechamento.ids.map(id =>
         api('PATCH', `/pedidos/${id}/status`, { status: 'entregue' })
       )
     );
-    toast(`Mesa ${mesaEmFechamento.mesa} fechada! ✅`);
+    toast(`Mesa ${mesaEmFechamento.mesa} fechada! ✅`); //status da mesa
     fechar('m-fechar-mesa');
     mesaEmFechamento = null;
     carregarMesas();
