@@ -384,7 +384,8 @@ function abrirFecharMesa(mesa, total, ids) {
     </p>`;
   abrir('m-fechar-mesa');
 }
-
+ 
+//verifica a disponiblidade da mesa
 async function confirmarFechamento() {
   if (!mesaEmFechamento) return;
 
@@ -400,7 +401,7 @@ async function confirmarFechamento() {
     carregarMesas();
   } catch (e) { toast('Erro: ' + e.message, 'err'); }
 }
-
+//envolve essa fuction a verificação de o usuario é administrador ou não , alem de dar permições e tirar dependendo do cargo
 function ir(pg, btn) {
   const perfil = document.getElementById('sb-perfil').textContent;
   if (pg === 'usuarios' && perfil !== 'Administrador') {
@@ -427,6 +428,8 @@ function ir(pg, btn) {
   if (loaders[pg]) loaders[pg]();
 }
 
+
+// Essa função é responsável por utilizada para navegar entre seções com base no tipo de perfil 
 async function carregarDashboard() {
   const h = new Date().getHours();
   const s = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
@@ -478,6 +481,9 @@ async function carregarDashboard() {
   } catch (e) { toast('Erro dashboard: ' + e.message, 'err'); }
 }
 
+
+//--------------------------------------------------------------------------------
+//é responsável por buscar uma lista de pizzas de uma API e exibi-las dinamicamente em uma tabela HTML
 async function carregarPizzas() {
   const el = document.getElementById('tbl-pizzas');
   el.innerHTML = '<div class="spin-wrap"><div class="spin"></div> Carregando...</div>';
@@ -511,6 +517,9 @@ async function carregarPizzas() {
   }
 }
 
+
+//_____________________________________________________________________________
+// essa fuction é responsavel por limpar os cadastros de pedidos de pizzas, quando já entregue a pizza para liberar espaço
 function abrirPizza() {
   document.getElementById('m-pizza-t').textContent = 'Nova Pizza';
   ['p-id','p-nome','p-ing','p-desc','p-pp','p-pm','p-pg']
@@ -519,6 +528,8 @@ function abrirPizza() {
   document.getElementById('p-disp').value = 'true';
   abrir('m-pizza');
 }
+
+//_____________________________________________________________________________
 
 function editarPizza(id) {
   const p = cPizzas.find(x => x._id === id);
@@ -572,6 +583,7 @@ async function deletarPizza(id, nome) {
   } catch (e) { toast('Erro: ' + e.message, 'err'); }
 }
 
+//essa função 
 async function carregarClientes(busca = '') {
   const el = document.getElementById('tbl-clientes');
   el.innerHTML = '<div class="spin-wrap"><div class="spin"></div> Carregando...</div>';
@@ -603,12 +615,15 @@ async function carregarClientes(busca = '') {
   }
 }
 
+//ese codigo serve para otimizar o desempenho de funções que são chamadas com muita frequência (que é o que mais tem nessa programação ksksks)
 let _t;
 function buscarCli(v) {
   clearTimeout(_t);
   _t = setTimeout(() => carregarClientes(v), 400);
 }
 
+//---------------------------------------------------
+//cria e abre um novo cliente
 function abrirCliente() {
   document.getElementById('m-cli-t').textContent = 'Novo Cliente';
   ['c-id','c-nome','c-tel','c-rua','c-num','c-bairro','c-cidade','c-cep','c-comp','c-obs']
@@ -616,6 +631,8 @@ function abrirCliente() {
   abrir('m-cliente');
 }
 
+
+//informações do cliente e editar ele
 function editarCliente(id) {
   const c = cClientes.find(x => x._id === id);
   if (!c) return;
@@ -632,6 +649,8 @@ function editarCliente(id) {
   document.getElementById('c-obs').value    = c.observacoes || '';
   abrir('m-cliente');
 }
+
+//essa função pode salvar alterações de um cliente ou criar contas de novos clientes.
 
 async function salvarCliente() {
   const id   = document.getElementById('c-id').value;
@@ -661,6 +680,8 @@ async function salvarCliente() {
   } catch (e) { toast('Erro: ' + e.message, 'err'); }
 }
 
+//----------------------------------------
+//deleta o cliente
 async function deletarCliente(id, nome) {
   if (!confirm(`Deletar "${nome}"?`)) return;
   try {
@@ -670,6 +691,8 @@ async function deletarCliente(id, nome) {
   } catch (e) { toast('Erro: ' + e.message, 'err'); }
 }
 
+
+//ajuda na administração de pedidos e suas entregas
 async function carregarPedidos() {
   const el = document.getElementById('tbl-pedidos');
   el.innerHTML = '<div class="spin-wrap"><div class="spin"></div> Carregando...</div>';
@@ -704,6 +727,7 @@ async function carregarPedidos() {
   }
 }
 
+//abre o pedido para fazer a compra
 async function abrirPedido() {
   try {
     if (!cPizzas.length)   cPizzas   = await api('GET', '/pizzas');
@@ -726,6 +750,7 @@ async function abrirPedido() {
   abrir('m-pedido');
 }
 
+//isso adiciona os itens a compra
 function addItem() {
   const d = document.createElement('div');
   d.className = 'item-row';
@@ -742,6 +767,9 @@ function addItem() {
 
   document.getElementById('itens-lista').appendChild(d);
 }
+//--------------------------------------------------------------------------
+
+//calcula o subtotal e o total de um pedido online, desde o pedido até a taixa de entrega
 
 function recalc() {
   let sub = 0;
@@ -761,12 +789,15 @@ function recalc() {
   document.getElementById('ped-tot').textContent = R$(sub + taxa);
 }
 
+//--------------------------------------------------------------------------
+//esse cdogo exibe ou oculta um campo de troco baseado na forma de pagamento selecionada pelo usuário. 
 function toggleTroco() {
   const pag = document.getElementById('ped-pag').value;
   document.getElementById('wrap-troco').style.display =
     pag === 'dinheiro' ? 'block' : 'none';
 }
 
+//esse codigo guarda os dados do pedido, como qual sabor, tamanho e quantidade
 async function salvarPedido() {
   const cliId = document.getElementById('ped-cli').value;
   if (!cliId) { toast('Selecione um cliente', 'err'); return; }
@@ -802,12 +833,16 @@ async function salvarPedido() {
   } catch (e) { toast('Erro: ' + e.message, 'err'); }
 }
 
+
+//exibe o status abrindo uma interface de visualização e tal
 function abrirStatus(id, status) {
   document.getElementById('st-id').value  = id;
   document.getElementById('st-val').value = status;
   abrir('m-status');
 }
 
+
+//salva o pedido
 async function salvarStatus() {
   const id     = document.getElementById('st-id').value;
   const status = document.getElementById('st-val').value;
@@ -819,6 +854,8 @@ async function salvarStatus() {
   } catch (e) { toast('Erro: ' + e.message, 'err'); }
 }
 
+
+//apaga o pedido
 async function deletarPedido(id) {
   if (!confirm('Deletar este pedido?')) return;
   try {
@@ -828,13 +865,16 @@ async function deletarPedido(id) {
   } catch (e) { toast('Erro: ' + e.message, 'err'); }
 }
 
+
+// procura o usuario entre os já registrados e os exibe em uma tabela
 async function carregarUsuarios() {
   const el = document.getElementById('tbl-usuarios');
   el.innerHTML = '<div class="spin-wrap"><div class="spin"></div> Carregando...</div>';
   try {
     const us = await api('GET', '/usuarios');
+
     if (!us.length) {
-      el.innerHTML = '<div class="empty"><span class="ei">🔐</span>Nenhum usuário</div>';
+      el.innerHTML = '<div class="empty"><span class="ei">🔐</span>Nenhum usuário</div>'; //caso encontre o usuario
       return;
     }
     el.innerHTML = `
@@ -856,12 +896,14 @@ async function carregarUsuarios() {
     el.innerHTML = `<div class="empty" style="color:var(--red)">${e.message}</div>`;
   }
 }
-
+//ativa o perfil ao ele entrar no site / ser conectado
 function abrirUsuario() {
   ['u-nome','u-email','u-senha'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('u-perfil').value = 'Atendente';
   abrir('m-usuario');
 }
+
+//adiciona um usuario e mantem salvo para a pessoa mais tarde poder acessar o site
 
 async function salvarUsuario() {
   const nome  = document.getElementById('u-nome').value.trim();
@@ -880,6 +922,7 @@ async function salvarUsuario() {
   } catch (e) { toast('Erro: ' + e.message, 'err'); }
 }
 
+//deleta usuario
 async function deletarUsuario(id, nome) {
   if (!confirm(`Deletar "${nome}"?`)) return;
   try {
@@ -888,3 +931,5 @@ async function deletarUsuario(id, nome) {
     carregarUsuarios();
   } catch (e) { toast('Erro: ' + e.message, 'err'); }
 }
+
+//os comentarios a cima foram digitados pelas nossas mãos esqueleticas de programador, prof :)
