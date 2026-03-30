@@ -493,7 +493,8 @@ async function carregarPizzas() {
       el.innerHTML = '<div class="empty"><span class="ei">🍕</span>Nenhuma pizza</div>';
       return;
     }
-    el.innerHTML = `
+    //innerHTML = essa propriedade permite ler ou alterar o conteudo de um elemento DOM
+    el.innerHTML = ` 
       <table>
         <thead>
           <tr><th>Nome</th><th>Categoria</th><th>Ingredientes</th><th>P</th><th>M</th><th>G</th><th>Status</th><th>Ações</th>
@@ -501,6 +502,7 @@ async function carregarPizzas() {
         <tbody>
           ${cPizzas.map(p => `
             <tr>
+            
               <td><strong>${p.nome}</strong><br><small style="color:var(--muted)">${p.descricao || ''}</small></td>
               <td><span class="badge b-cat">${p.categoria || 'tradicional'}</span></td>
               <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.ingredientes}</td>
@@ -516,6 +518,8 @@ async function carregarPizzas() {
     el.innerHTML = `<div class="empty" style="color:var(--red)">${e.message}</div>`;
   }
 }
+// Strong = é um elemento semântico usado para indicar que um texto tem forte importância
+//getElementById= vai atras de um elemento pelo id
 
 
 //_____________________________________________________________________________
@@ -530,6 +534,8 @@ function abrirPizza() {
 }
 
 //_____________________________________________________________________________
+
+//edita valores e coisas da pizza
 
 function editarPizza(id) {
   const p = cPizzas.find(x => x._id === id);
@@ -547,6 +553,7 @@ function editarPizza(id) {
   abrir('m-pizza');
 }
 
+//adiciona uma nova pizza para o menu essa função aqui
 async function salvarPizza() {
   const id   = document.getElementById('p-id').value;
   const nome = document.getElementById('p-nome').value.trim();
@@ -574,6 +581,7 @@ async function salvarPizza() {
   } catch (e) { toast('Erro: ' + e.message, 'err'); }
 }
 
+//deleta uma pizza essa função
 async function deletarPizza(id, nome) {
   if (!confirm(`Deletar "${nome}"?`)) return;
   try {
@@ -583,7 +591,7 @@ async function deletarPizza(id, nome) {
   } catch (e) { toast('Erro: ' + e.message, 'err'); }
 }
 
-//essa função 
+//essa função busca as informações sobre os clientes
 async function carregarClientes(busca = '') {
   const el = document.getElementById('tbl-clientes');
   el.innerHTML = '<div class="spin-wrap"><div class="spin"></div> Carregando...</div>';
@@ -933,3 +941,14 @@ async function deletarUsuario(id, nome) {
 }
 
 //os comentarios a cima foram digitados pelas nossas mãos esqueleticas de programador, prof :)
+
+
+//Index.js inicializa o servidor e conexção com banco de dados e trata os erros
+//script.js tambem conhecido como front endo comunica com a api e manipula o DOM
+//Auth.js verifica o token, simplifica a implementação de login com provedores sociais
+//os Models gerenciam a estrutura, persistência e regras de negócio dos dados
+//routes definem caminhos, organiza aplicações e recebe parâmetros capturando URL para realizar certas operções
+//.env guarda variaveis globais
+//pizza.bd é o banco de dados do programa da nossa pizzaria.
+//package.json e package-lock.json nós importamos para nosso é um arquivo fundamental em projetos JavaScript/Node.js que funciona como a "certidão de nascimento" e painel de configuração do projeto
+
