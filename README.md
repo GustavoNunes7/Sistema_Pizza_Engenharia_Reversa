@@ -4,14 +4,14 @@
 
 
 Para a criação do site foi usado as seguntes tecnologias:
--HTML
--JavaScript
--Node.js
--NPM
--CSS
--.env
--Banco de dados
--Json
++ HTML
++ JavaScript
++ Node.js
++ NPM
++ CSS
++ .env
++ Banco de dados
++ Json
 
 Utilizamos o Node.js e o npm como pré requisitos, baixamos as bibliotecas para então poder utilizar as demais ferramentas, pois eles deram o suporte necessario para nosso código.
 
