@@ -120,12 +120,12 @@ SIstema_Pizza_Engenharia_Reversa/
 <img src="./src/images/credenciais.png" alt="Interface do Site" width="500" height="300">
 
 <h2> Desafios encontrados durante a engenharia reversa e como foram solucionados.</h2>
- 1- Erros no código, <br></br>
- 2- Problemas com o JSOM
- 3- Organizar os arquivos nas pastas
- 4- Compreender o código
+ 1- Erros no código. <br></br>
+ 2- Problemas com o JSOM. <br></br>
+ 3- Organizar os arquivos nas pastas.<br></br>
+ 4- Compreender o código. <br></br>
 
 <h2>Possíveis melhorias futuras.</h2>
-+ Seguranças de senha.
-+ Adicionar outros produtos.
-+ Adaptar para diferentes dispositivos móveis.
+1- Seguranças de senha. <br></br>
+2- Adicionar outros produtos. <br></br>
+3- Adaptar para diferentes dispositivos móveis. <br></br>
