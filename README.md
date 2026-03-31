@@ -4,7 +4,6 @@
 <img src="./src/images/Interface.png" alt="Interface do Site" width="500" height="300">
 <img src="./src/images/Gerenciamento do cardápio.png" alt="Interface do Site" width="500" height="300">
 
-
 <h3>O site feito foi para uma pizzaria, onde a pessoa pode acessar e fazer o pedido, no site tambem é atualizado o starus do pedido, como "sendo feito" ou "saiu para a entrega".</h3> 
 
 
@@ -119,3 +118,14 @@ SIstema_Pizza_Engenharia_Reversa/
 
 <h2>Credenciais de teste.</h2>
 <img src="./src/images/credenciais.png" alt="Interface do Site" width="500" height="300">
+
+<h2> Desafios encontrados durante a engenharia reversa e como foram solucionados.</h2>
+`1 - Erros no código.
+`2 - Problemas com o JSOM.
+`3 - Organizar os arquivos nas pastas.
+`4 - Compreender o código.
+
+<h2>Possíveis melhorias futuras.</h2>
+`1 - Seguranças de senha.
+`2 - Adicionar outros produtos.
+`3 - Adaptar para diferentes dispositivos móveis.
