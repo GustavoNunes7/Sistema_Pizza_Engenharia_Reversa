@@ -277,4 +277,6 @@ router.delete('/usuarios/:id', auth, async (req, res) => {
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
+
+// Exportar um objeto de rotas
 module.exports = router;

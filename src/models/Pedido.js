@@ -13,6 +13,7 @@ const SELECT_PEDIDO = `
   LEFT JOIN clientes c ON c.id = p.cliente_id
 `;
 
+//dados do pedido
 function formatarPedido(row, itens = []) {
   if (!row) return null;
   return {
@@ -50,6 +51,7 @@ function formatarPedido(row, itens = []) {
 }
 
 const Pedido = {
+  //seleciona pedidos
 
   async findAll({ garcomId } = {}) {
     await ready;
@@ -66,6 +68,7 @@ const Pedido = {
   },
 
   async findById(id) {
+    //procura os pedidos pelo id
     await ready;
     const row = get(`${SELECT_PEDIDO} WHERE p.id = ?`, [id]);
     if (!row) return null;
@@ -75,6 +78,7 @@ const Pedido = {
 
   async create({ clienteId, itens, taxaEntrega = 0, formaPagamento, troco = 0, observacoes = '', mesa = null, origem = 'balcao', garcomId = null }) {
     await ready;
+    //cria pedidos de pizzas
 
     const Pizza = require('./Pizza');
     let subtotal = 0;
@@ -123,6 +127,7 @@ const Pedido = {
     return this.findById(pedidoId);
   },
 
+  //atualiza dados
   async updateStatus(id, status) {
     await ready;
     const info = run(
@@ -139,6 +144,6 @@ const Pedido = {
     const info = run('DELETE FROM pedidos WHERE id = ?', [id]);
     return info.changes > 0;
   },
-};
+}; //deleta o pedido
 
 module.exports = Pedido;
