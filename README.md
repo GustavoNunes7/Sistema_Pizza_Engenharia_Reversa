@@ -106,12 +106,15 @@ SIstema_Pizza_Engenharia_Reversa/
 ```
 
 <h2>Funcionalidades e como testá-las.</h2>
-```table
-Método	Endpoint	Descrição	Autenticado
-POST	/auth/login	Login e geração de JWT	Não
-GET	/users	Listar usuários	Sim
-POST	/produtos	Cadastrar novo produto	Sim
-```
+## 🚀 Endpoints da API
+
+
+| Método | Endpoint | Descrição | Autenticado |
+| :--- | :--- | :--- | :---: |
+| `POST` | `/auth/login` | Login e geração de JWT | ❌ |
+| `GET` | `/users` | Listar usuários | ✅ |
+| `POST` | `/produtos` | Cadastrar novo produto | ✅ |
+
 
 <h2>Credenciais de teste.</h2>
 <img src="./src/images/credenciais.png" alt="Interface do Site" width="500" height="300">
