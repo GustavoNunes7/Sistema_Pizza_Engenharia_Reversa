@@ -251,7 +251,7 @@ router.post('/usuarios', auth, async (req, res) => {
 });
 
 
-
+// Requisição para apenas os Administradores poderem acessar e o gerenciamento de cadastros, como atualizar cadastros
 router.put('/usuarios/:id', auth, async (req, res) => {
   try {
     if (req.usuario.perfil !== 'Administrador')
@@ -265,6 +265,7 @@ router.put('/usuarios/:id', auth, async (req, res) => {
 
 
 
+// Requisição para apenas os Administradores poderem acessar e o gerenciamento de cadastros, como deletar cadastros
 
 router.delete('/usuarios/:id', auth, async (req, res) => {
   try {
