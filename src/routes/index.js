@@ -94,7 +94,7 @@ router.delete('/pizzas/:id', auth, async (req, res) => {
 
 
 
-
+// Requisição da Json no caminho dos clientes no banco de dados caso dê erro
 router.get('/clientes', auth, async (req, res) => {
   try { res.json(await Cliente.findAll(req.query.busca)); }
   catch (e) { res.status(500).json({ erro: e.message }); }
@@ -102,7 +102,7 @@ router.get('/clientes', auth, async (req, res) => {
 
 
 
-
+// Requisição da Json no caminho dos clientes consultando pelo id do cliente caso dê erro
 router.get('/clientes/:id', auth, async (req, res) => {
   try {
     const c = await Cliente.findById(req.params.id);
@@ -113,7 +113,7 @@ router.get('/clientes/:id', auth, async (req, res) => {
 
 
 
-
+// Requisição da Json no caminho dos clientes verificando se foi digitado o Nome e o telefone do cliente
 router.post('/clientes', auth, async (req, res) => {
   try {
     if (!req.body.nome || !req.body.telefone)
@@ -124,7 +124,7 @@ router.post('/clientes', auth, async (req, res) => {
 
 
 
-
+// Requisição da Json no caminho dos clientes consultando pelo id do cliente caso dê erro, e tentando atualizar
 router.put('/clientes/:id', auth, async (req, res) => {
   try {
     const c = await Cliente.update(req.params.id, req.body);
@@ -133,6 +133,8 @@ router.put('/clientes/:id', auth, async (req, res) => {
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
+
+// Requisição da Json no caminho dos clientes consultando pelo id do cliente caso dê erro, e depois deletando o cliente como opção
 router.delete('/clientes/:id', auth, async (req, res) => {
   try {
     const ok = await Cliente.delete(req.params.id);
@@ -141,6 +143,11 @@ router.delete('/clientes/:id', auth, async (req, res) => {
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
+
+
+
+
+// Requisição da Json no caminho dos pedidos no banco de dados caso dê erro
 router.get('/pedidos', auth, async (req, res) => {
   try {
     const filtros = {};
@@ -149,6 +156,9 @@ router.get('/pedidos', auth, async (req, res) => {
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
+
+
+// Requisição da Json no caminho dos pedidos consultando pelo id do pedido caso dê erro
 router.get('/pedidos/:id', auth, async (req, res) => {
   try {
     const p = await Pedido.findById(req.params.id);
@@ -157,12 +167,18 @@ router.get('/pedidos/:id', auth, async (req, res) => {
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
+
+
+// Requisição da Json no caminho dos clientes verificando se foi digitado o Nome ddo cliente, os itens e a forma de pagamento
 router.post('/pedidos', auth, async (req, res) => {
   try {
     const { cliente, itens, formaPagamento } = req.body;
     if (!cliente || !itens?.length || !formaPagamento)
       return res.status(400).json({ erro: 'cliente, itens e formaPagamento são obrigatórios' });
 
+
+
+    // Criação de novo pedido um novo e caso dê erro na criaçã
     const novo = await Pedido.create({
       clienteId:      cliente,
       itens,
@@ -178,6 +194,12 @@ router.post('/pedidos', auth, async (req, res) => {
   } catch (e) { res.status(400).json({ erro: e.message }); }
 });
 
+
+
+
+
+
+// Atualizar parcialmente o status de um pedido específico. 
 router.patch('/pedidos/:id/status', auth, async (req, res) => {
   try {
     const validos = ['recebido','em_preparo','saiu_entrega','entregue','cancelado'];
@@ -189,6 +211,10 @@ router.patch('/pedidos/:id/status', auth, async (req, res) => {
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
+
+
+// Requisição da Json no caminho dos pedidos consultando pelo id do pedido0 caso dê erro, e depois deletando o pedido como opção
+
 router.delete('/pedidos/:id', auth, async (req, res) => {
   try {
     const ok = await Pedido.delete(req.params.id);
@@ -197,6 +223,9 @@ router.delete('/pedidos/:id', auth, async (req, res) => {
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
+
+
+// Requisição para apenas os Administradores poderem acessar
 router.get('/usuarios', auth, async (req, res) => {
   try {
     if (req.usuario.perfil !== 'Administrador')
@@ -205,6 +234,8 @@ router.get('/usuarios', auth, async (req, res) => {
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
+
+// Requisição para apenas os Administradores poderem acessar e o gerenciamento de cadastros
 router.post('/usuarios', auth, async (req, res) => {
   try {
     if (req.usuario.perfil !== 'Administrador')
@@ -219,6 +250,8 @@ router.post('/usuarios', auth, async (req, res) => {
   }
 });
 
+
+
 router.put('/usuarios/:id', auth, async (req, res) => {
   try {
     if (req.usuario.perfil !== 'Administrador')
@@ -228,6 +261,10 @@ router.put('/usuarios/:id', auth, async (req, res) => {
     res.json(u);
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
+
+
+
+
 
 router.delete('/usuarios/:id', auth, async (req, res) => {
   try {

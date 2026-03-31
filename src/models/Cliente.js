@@ -4,7 +4,7 @@
 
 const { ready, query, run, get } = require('../database/sqlite');
 
-function formatarCliente(row) {
+function formatarCliente(row) { //as caracteristicas do login de cliente
   if (!row) return null;
   return {
     _id:        row.id,
@@ -20,6 +20,7 @@ function formatarCliente(row) {
 }
 
 const Cliente = {
+  //busca pelo cliente
 
   async findAll(busca = '') {
     await ready;
@@ -46,10 +47,11 @@ const Cliente = {
     const info = run(
       'INSERT INTO clientes (nome, telefone, endereco, observacoes) VALUES (?, ?, ?, ?)',
       [nome.trim(), telefone.trim(), JSON.stringify(endereco), observacoes]
-    );
+    ); //dados do cliente
     return this.findById(info.lastInsertRowid);
   },
 
+  //atualiza dados do cliente
   async update(id, { nome, telefone, endereco, observacoes, ativo }) {
     await ready;
     const atual = get('SELECT * FROM clientes WHERE id = ?', [id]);
@@ -74,12 +76,13 @@ const Cliente = {
       observacoes ?? atual.observacoes,
       ativo !== undefined ? (ativo ? 1 : 0) : atual.ativo,
       id
-    ]);
+    ]); 
 
     return this.findById(id);
   },
 
   async delete(id) {
+    //deleta o cliente
     await ready;
     const info = run('DELETE FROM clientes WHERE id = ?', [id]);
     return info.changes > 0;
