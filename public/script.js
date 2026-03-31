@@ -6,6 +6,8 @@ let cClientes = [];
 let TOKEN          = localStorage.getItem('pz_token') || '';
 let USUARIO_LOGADO = JSON.parse(localStorage.getItem('pz_usuario') || 'null');
 let mesaEmFechamento = null;
+//essas linhas a cima criam boa parte das variaveis
+
 
 //esse inicio é sobre o login
 async function fazerLogin() {
@@ -53,6 +55,8 @@ async function fazerLogin() {
   }
 }
 
+
+//limpa o status de armazenamento
 function sair() {
   TOKEN = '';
   USUARIO_LOGADO = null;
@@ -62,10 +66,13 @@ function sair() {
   document.getElementById('l-senha').value = '';
 }
 
+//ativa o usuario quando loga
 if (TOKEN && USUARIO_LOGADO) {
   aplicarPerfil(USUARIO_LOGADO);
   document.body.classList.add('logado');
 }
+
+//adiicona uma classe para exebição
 
 function toast(msg, tipo = 'ok') {
   const el = document.getElementById('toast');
@@ -74,6 +81,7 @@ function toast(msg, tipo = 'ok') {
   setTimeout(() => el.className = '', 3000);
 }
 
+//essas duas linhas adicionam ou removem itens do html, isso é usado para mudar a tela da pagina para a nova pagina do usuario
 function abrir(id)  { document.getElementById(id).classList.add('open'); }
 function fechar(id) { document.getElementById(id).classList.remove('open'); }
 
@@ -97,6 +105,7 @@ function badge(s) {
   return `<span class="badge b-${s}">${r[s] || s}</span>`;
 }
 
+//para casos de erros
 async function api(method, url, body) {
   const opts = {
     method,
@@ -105,16 +114,18 @@ async function api(method, url, body) {
       'Authorization': `Bearer ${TOKEN}`,
     },
   };
+  
   if (body) opts.body = JSON.stringify(body);
 
   const res  = await fetch(API + url, opts);
   const data = await res.json();
-
+  //caso de erro de conecção
   if (res.status === 401) { sair(); throw new Error('Sessão expirada'); }
   if (!res.ok) throw new Error(data.erro || 'Erro na requisição');
   return data;
 }
 
+//permições ao tipo de perfil usuario
 function aplicarPerfil(usuario) {
   document.getElementById('sb-nome').textContent   = usuario.nome;
   document.getElementById('sb-perfil').textContent = usuario.perfil;
@@ -154,6 +165,8 @@ function aplicarPerfil(usuario) {
   show('stat-fat', !isGar, 'block');
   show('stat-cli', !isGar, 'block');
 
+
+  //mesas livres ou não
   if (isGar) {
     ir('mesas', document.getElementById('btn-nav-mesas'));
   } else {
@@ -161,6 +174,7 @@ function aplicarPerfil(usuario) {
   }
 }
 
+//exibe os pedidos em uma interface mais "bonita" para o usuario
 async function carregarMesas(mesaFiltro = null) {
   const grid = document.getElementById('grid-mesas');
   grid.innerHTML = '<div class="spin-wrap"><div class="spin"></div> Carregando...</div>';
@@ -194,11 +208,12 @@ async function carregarMesas(mesaFiltro = null) {
           ${n}${temPed ? ' 🔴' : ''}
         </button>`;
     }).join('');
-
+//fitra os pedidos
     const pedidosFiltrados = mesaFiltro
       ? ativos.filter(p => p.mesa === mesaFiltro)
       : ativos;
 
+      
     if (!pedidosFiltrados.length) {
       grid.innerHTML = `
         <div class="empty" style="grid-column:1/-1">
@@ -210,6 +225,8 @@ async function carregarMesas(mesaFiltro = null) {
         </div>`;
       return;
     }
+  
+    //junta os pedidos os agrupando para cada mesa
 
     const porMesa = {};
     pedidosFiltrados.forEach(p => {
@@ -217,7 +234,7 @@ async function carregarMesas(mesaFiltro = null) {
       if (!porMesa[key]) porMesa[key] = [];
       porMesa[key].push(p);
     });
-
+     //CRIA UM PAINEL DE PEDIDOS 
     grid.innerHTML = Object.entries(porMesa).map(([mesa, peds]) => {
       const totalMesa  = peds.reduce((s, p) => s + (p.total || 0), 0);
       const todosItens = peds.flatMap(p => p.itens);
@@ -271,6 +288,7 @@ async function carregarMesas(mesaFiltro = null) {
   }
 }
 
+//cria o pedido da mesa
 async function abrirPedidoMesa(mesaNum = null) {
   try {
     if (!cPizzas.length)   cPizzas   = await api('GET', '/pizzas');
@@ -291,6 +309,7 @@ async function abrirPedidoMesa(mesaNum = null) {
   abrir('m-pedido-mesa');
 }
 
+//organiza os pedidos em uma tabela
 function addItemMesa() {
   const d = document.createElement('div');
   d.className = 'item-row';
@@ -309,6 +328,7 @@ function addItemMesa() {
   document.getElementById('itens-mesa-lista').appendChild(d);
 }
 
+//calcula a conta de cada mesa, conforme a pessoa que está na mesa vai pedindo vai sendo adicionado na conta da mesa, e no final se torna possivel cobrar o valor sem tanta demora no caixa para calcular tudo pois será feito automaticamente pelo nosso sistema.
 function recalcMesa() {
   let sub = 0;
   document.querySelectorAll('#itens-mesa-lista .item-row').forEach(row => {
@@ -323,6 +343,7 @@ function recalcMesa() {
   document.getElementById('pm-tot').textContent = R$(sub);
 }
 
+//verifica se está livre a mesa para fazer o pedido
 async function salvarPedidoMesa() {
   const mesa = parseInt(document.getElementById('pm-mesa').value) || 0;
   if (!mesa || mesa < 1) { toast('Selecione a mesa', 'err'); return; }
@@ -339,8 +360,10 @@ async function salvarPedidoMesa() {
     });
   });
 
+  //pede para adcionar algum item essa programação
   if (!valido || !itens.length) { toast('Adicione ao menos um item', 'err'); return; }
 
+  //verifica e organiza os clientes em tabelas
   let clienteId = cliId;
   if (!clienteId) {
     try {

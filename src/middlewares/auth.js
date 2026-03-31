@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
+//cria a constante que chama o 'jsonwebtoken'
 
+//essa função autentifica o json
 function autenticar(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token      = authHeader && authHeader.split(' ')[1];
@@ -18,3 +20,4 @@ function autenticar(req, res, next) {
 }
 
 module.exports = autenticar;
+//essa parte meio que "nomeia" esse codigo para autenticação

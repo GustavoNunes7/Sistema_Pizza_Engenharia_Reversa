@@ -1,15 +1,21 @@
-  const express  = require('express');
+// Importar frameworks
+const express  = require('express');
 const jwt      = require('jsonwebtoken');
 const router   = express.Router();
 const auth     = require('../middlewares/auth');
 
+// Caminho para os Models JS
 const Usuario  = require('../models/Usuario');
 const Pizza    = require('../models/Pizza');
 const Cliente  = require('../models/Cliente');
 const Pedido   = require('../models/Pedido');
 
+// Manipulador de Rotas
 router.post('/auth/login', async (req, res) => {
-  try {
+
+
+  // Verificação do email e da senha para caso o código tem um problema
+  try { // Caso dê erro no código
     const { email, senha } = req.body;
     if (!email || !senha) return res.status(400).json({ erro: 'E-mail e senha são obrigatórios' });
 
@@ -25,15 +31,22 @@ router.post('/auth/login', async (req, res) => {
       { expiresIn: '8h' }
     );
 
+
+    // Envia uma resposta do Json  para o Front-end
     res.json({ token, usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email, perfil: usuario.perfil } });
-  } catch (e) { res.status(500).json({ erro: e.message }); }
+  } catch (e) { res.status(500).json({ erro: e.message }); } 
+
 });
 
+
+//  Requisição da Json no Caminho das pizzas no banco de dados
 router.get('/pizzas', auth, async (req, res) => {
   try { res.json(await Pizza.findAll()); }
   catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
+
+// Requisição da Json no caminho das pizzas consultando pelo id da Pizza 
 router.get('/pizzas/:id', auth, async (req, res) => {
   try {
     const p = await Pizza.findById(req.params.id);
@@ -41,6 +54,9 @@ router.get('/pizzas/:id', auth, async (req, res) => {
     res.json(p);
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
+
+
+
 
 router.post('/pizzas', auth, async (req, res) => {
   try {
@@ -50,6 +66,10 @@ router.post('/pizzas', auth, async (req, res) => {
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
+
+
+
+
 router.put('/pizzas/:id', auth, async (req, res) => {
   try {
     const p = await Pizza.update(req.params.id, req.body);
@@ -57,6 +77,11 @@ router.put('/pizzas/:id', auth, async (req, res) => {
     res.json(p);
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
+
+
+
+
+
 
 router.delete('/pizzas/:id', auth, async (req, res) => {
   try {
@@ -66,10 +91,17 @@ router.delete('/pizzas/:id', auth, async (req, res) => {
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
+
+
+
+
 router.get('/clientes', auth, async (req, res) => {
   try { res.json(await Cliente.findAll(req.query.busca)); }
   catch (e) { res.status(500).json({ erro: e.message }); }
 });
+
+
+
 
 router.get('/clientes/:id', auth, async (req, res) => {
   try {
@@ -79,6 +111,9 @@ router.get('/clientes/:id', auth, async (req, res) => {
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
+
+
+
 router.post('/clientes', auth, async (req, res) => {
   try {
     if (!req.body.nome || !req.body.telefone)
@@ -86,6 +121,9 @@ router.post('/clientes', auth, async (req, res) => {
     res.status(201).json(await Cliente.create(req.body));
   } catch (e) { res.status(500).json({ erro: e.message }); }
 });
+
+
+
 
 router.put('/clientes/:id', auth, async (req, res) => {
   try {
