@@ -68,7 +68,7 @@ http://localhost:' + PORT
 
 
 <h2>Estrutura de Pastas Explicada</h2>
-<img src="./src/images/Estrutura.png" alt="Interface do Site" width="500" height="300">
+<img src="./src/images/Estrutura.png" alt="Interface do Site" >
 
 ```text
 
