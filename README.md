@@ -2,6 +2,7 @@
 <br>
 
 <img src="./src/images/Interface.png" alt="Interface do Site" width="500" height="300">
+<img src="./src/images/Gerenciamento do cardápio.png" alt="Interface do Site" width="500" height="300">
 
 
 <h3>O site feito foi para uma pizzaria, onde a pessoa pode acessar e fazer o pedido, no site tambem é atualizado o starus do pedido, como "sendo feito" ou "saiu para a entrega".</h3> 
