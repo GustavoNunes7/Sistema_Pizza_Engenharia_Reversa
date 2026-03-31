@@ -39,14 +39,14 @@ router.post('/auth/login', async (req, res) => {
 });
 
 
-//  Requisição da Json no Caminho das pizzas no banco de dados
+//  Requisição da Json no Caminho das pizzas no banco de dados caso dê erro
 router.get('/pizzas', auth, async (req, res) => {
   try { res.json(await Pizza.findAll()); }
   catch (e) { res.status(500).json({ erro: e.message }); }
 });
 
 
-// Requisição da Json no caminho das pizzas consultando pelo id da Pizza 
+// Requisição da Json no caminho das pizzas consultando pelo id da Pizza caso dê erro
 router.get('/pizzas/:id', auth, async (req, res) => {
   try {
     const p = await Pizza.findById(req.params.id);
@@ -57,7 +57,7 @@ router.get('/pizzas/:id', auth, async (req, res) => {
 
 
 
-
+// Requisição da Json no caminho das pizzas verificando se foi digitado o Nome e os ingredientes da pizza
 router.post('/pizzas', auth, async (req, res) => {
   try {
     if (!req.body.nome || !req.body.ingredientes)
@@ -69,7 +69,7 @@ router.post('/pizzas', auth, async (req, res) => {
 
 
 
-
+// Requisição da Json no caminho das pizzas consultando pelo id da Pizza caso dê erro, e tentando atualizar
 router.put('/pizzas/:id', auth, async (req, res) => {
   try {
     const p = await Pizza.update(req.params.id, req.body);
@@ -82,7 +82,7 @@ router.put('/pizzas/:id', auth, async (req, res) => {
 
 
 
-
+// Requisição da Json no caminho das pizzas consultando pelo id da Pizza caso dê erro, e depois deletando a pizza como opção
 router.delete('/pizzas/:id', auth, async (req, res) => {
   try {
     const ok = await Pizza.delete(req.params.id);

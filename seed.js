@@ -5,6 +5,8 @@ const { ready, run, query } = require('./src/database/sqlite');
 const bcrypt = require('bcryptjs');
 
 async function seed() {
+  //limpa o banco de dados
+
   try {
     await ready;
     console.log('🧹 Limpando banco...');
@@ -22,7 +24,7 @@ async function seed() {
     console.log('✅ Banco limpo');
 
     const hash = await bcrypt.hash('123456', 10);
-
+    //para inserir informações sobre os usuarios para cirar as contas deles nas tabelas dos bancos de dados
     run('INSERT INTO usuarios (nome, email, senha, perfil) VALUES (?, ?, ?, ?)',
       ['Administrador Master', 'admin@pizzaria.com', hash, 'Administrador']);
     run('INSERT INTO usuarios (nome, email, senha, perfil) VALUES (?, ?, ?, ?)',
@@ -31,7 +33,7 @@ async function seed() {
       ['Garcom Oficial', 'garcom@pizzaria.com', hash, 'Garcom']);
 
     console.log('✅ 3 usuários criados');
-
+       //aqui temos os cadastros dos usuarios que já foram criados, aqui temos não só nome mas tambem numero, onde moram e qual as preferencias deles em seus pedidos
     const clientes = [
       ['Lucas Ferreira Santos',   '11991234501', {rua:'Rua das Acácias',numero:'142',bairro:'Vila Madalena',cidade:'São Paulo',cep:'05435-000'}, 'Alérgico a glúten'],
       ['Camila Rodrigues Lima',   '11991234502', {rua:'Av. Paulista',numero:'900',bairro:'Bela Vista',cidade:'São Paulo',cep:'01310-100'}, ''],
@@ -58,9 +60,11 @@ async function seed() {
     for (const [nome, tel, end, obs] of clientes) {
       run('INSERT INTO clientes (nome, telefone, endereco, observacoes) VALUES (?, ?, ?, ?)',
         [nome, tel, JSON.stringify(end), obs]);
+        //para criar os clientes
     }
     console.log('✅ 20 clientes criados');
 
+    //aqui guarda todos os sabores, igredientes e tipos/tamanhos das pizzas
     const pizzas = [
       ['Calabresa','Clássica brasileira, presença garantida em qualquer mesa','Calabresa fatiada, cebola e azeitona',{P:35,M:45,G:55},'tradicional'],
       ['Margherita','A tradição italiana em cada fatia','Molho de tomate, mussarela e manjericão fresco',{P:34,M:44,G:54},'tradicional'],
@@ -87,6 +91,8 @@ async function seed() {
     for (const [nome, desc, ing, precos, cat] of pizzas) {
       run('INSERT INTO pizzas (nome, descricao, ingredientes, precos, categoria) VALUES (?, ?, ?, ?, ?)',
         [nome, desc, ing, JSON.stringify(precos), cat]);
+        //para criar novos sabores de pizzas
+
     }
     console.log('✅ 20 pizzas criadas');
 
@@ -95,6 +101,7 @@ async function seed() {
     console.log('======================================');
     console.log('Login: admin@pizzaria.com | Senha: 123456');
     console.log('======================================');
+    //avisa se foi executado com sucesso e caso não o que está escrito abaixo avisa de erro
     process.exit(0);
   } catch (err) {
     console.error('❌ ERRO NO SEED:', err);
@@ -102,4 +109,4 @@ async function seed() {
   }
 }
 
-seed();
+seed(); //ativa a função
